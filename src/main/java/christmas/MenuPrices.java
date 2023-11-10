@@ -1,7 +1,10 @@
 package christmas;
 
+import christmas.menu.Menu;
+
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class MenuPrices {
     private final Map<String, Integer> appetizer = new HashMap<>();
@@ -17,27 +20,27 @@ public class MenuPrices {
     }
 
     private void initializeAppetizerPrices() {
-        appetizer.put("양송이수프", 6_000);
-        appetizer.put("타파스", 5_500);
-        appetizer.put("시저샐러드", 8_000);
+        appetizer.put(Menu.YANGSONG_SOUP.getMenuName(), Menu.YANGSONG_SOUP.getPrice());
+        appetizer.put(Menu.TAPAS.getMenuName(), Menu.TAPAS.getPrice());
+        appetizer.put(Menu.CAESAR_SALAD.getMenuName(), Menu.CAESAR_SALAD.getPrice());
     }
 
     private void initializeMainMenuPrices() {
-        mainMenu.put("티본스테이크", 55_000);
-        mainMenu.put("바비큐립", 54_000);
-        mainMenu.put("해산물파스타", 35_000);
-        mainMenu.put("크리스마스파스타", 25_000);
+        mainMenu.put(Menu.T_BONE_STEAK.getMenuName(), Menu.T_BONE_STEAK.getPrice());
+        mainMenu.put(Menu.BBQ_RIB.getMenuName(), Menu.BBQ_RIB.getPrice());
+        mainMenu.put(Menu.SEAFOOD_PASTA.getMenuName(), Menu.SEAFOOD_PASTA.getPrice());
+        mainMenu.put(Menu.CHRISTMAS_PASTA.getMenuName(), Menu.CHRISTMAS_PASTA.getPrice());
     }
 
     private void initializeDessertPrices() {
-        dessert.put("초코케이크", 15_000);
-        dessert.put("아이스크림", 5_000);
+        dessert.put(Menu.CHOCO_CAKE.getMenuName(), Menu.CHOCO_CAKE.getPrice());
+        dessert.put(Menu.ICE_CREAM.getMenuName(), Menu.ICE_CREAM.getPrice());
     }
 
     private void initializeBeveragePrices() {
-        beverage.put("제로콜라", 3_000);
-        beverage.put("레드와인", 6_000);
-        beverage.put("샴페인", 25_000);
+        beverage.put(Menu.ZERO_COKE.getMenuName(), Menu.ZERO_COKE.getPrice());
+        beverage.put(Menu.RED_WINE.getMenuName(), Menu.RED_WINE.getPrice());
+        beverage.put(Menu.CHAMPAGNE.getMenuName(), Menu.CHAMPAGNE.getPrice());
     }
 
     // 모든 메뉴의 가격을 가져오는 메서드
@@ -56,7 +59,7 @@ public class MenuPrices {
         return price;
     }
 
-    // 각 메뉴의 가격을 가져올 수 있는 메서드
+//     각 메뉴의 가격을 가져올 수 있는 메서드
     public int getAppetizerPrice(String item) {
         return appetizer.getOrDefault(item, 0);
     }
