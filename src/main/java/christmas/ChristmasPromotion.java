@@ -40,7 +40,6 @@ public class ChristmasPromotion {
         EventDiscount eventDiscount = new EventDiscount();
 
         boolean eventTicket = eventDiscount.eventMinimumCondition(totalOrderCost); // 이벤트 최소 참여 조건
-
         // 만원 미만 구매시
 //        if (!eventTicket) {
 //
