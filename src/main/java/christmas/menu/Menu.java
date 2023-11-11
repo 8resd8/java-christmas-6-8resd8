@@ -41,24 +41,18 @@ public enum Menu {
         APPETIZER, MAIN_COURSE, DESSERT, BEVERAGE
     }
 
-    // 메뉴의 종류를 반환하는 메서드
     public MenuType getType() {
-        if (this.name().contains("양송이수프") || this.name().contains("타파스") || this.name().contains("시저샐러드")) {
+        String menuName = this.getMenuName();
+        if (menuName.contains("양송이수프") || menuName.contains("타파스") || menuName.contains("시저샐러드")) {
             return MenuType.APPETIZER;
-        } else if (this.name().equals("티본스테이크") || this.name().equals("바비큐립") || this.name().contains("해산물파스타")) {
+        } else if (menuName.equals("티본스테이크") || menuName.equals("바비큐립") || menuName.contains("해산물파스타")) {
             return MenuType.MAIN_COURSE;
-        } else if (this.name().contains("초코케이크") || this.name().contains("아이스크림")) {
+        } else if (menuName.contains("초코케이크") || menuName.contains("아이스크림")) {
             return MenuType.DESSERT;
-        } else if (this.name().contains("샴페인") || this.name().contains("레드와인") || this.name().contains("제로콜라")) {
+        } else if (menuName.contains("샴페인") || menuName.contains("레드와인") || menuName.contains("제로콜라")) {
             return MenuType.BEVERAGE;
         }
         return null;
-    }
-
-    // 메뉴의 종류를 문자열로 반환하는 메서드
-    public static String getMenuType(String menuName) {
-        Menu menu = Menu.valueOf(menuName);
-        return menu.getType().toString();
     }
 
 }

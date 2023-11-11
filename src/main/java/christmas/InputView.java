@@ -2,6 +2,7 @@ package christmas;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.menu.ErrorMessage;
+import christmas.menu.EventDay;
 import christmas.menu.Menu;
 
 import java.util.HashMap;
@@ -9,12 +10,15 @@ import java.util.LinkedHashMap;
 
 public class InputView {
 
+    private final String introduceRestaurantEvent = "안녕하세요! 우테코 식당 " + EventDay.MONTH.getValue() + "월 이벤트 플래너입니다.";
+    private final String askVisitDate = EventDay.MONTH.getValue() + "월 중 식당 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)";
+    private final String orderGuidance = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)";
+
     // 방문할 날짜를 입력
     public int visitDay() {
         int userVisitDay = -1;
 
-        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.\n" +
-                "12월 중 식당 예상 방문날짜는 언제인가요? (숫자만 입력해 주세요!)");
+        System.out.println(introduceRestaurantEvent + "\n" + askVisitDate);
         String visitDay = Console.readLine();
 
         try {
@@ -45,8 +49,9 @@ public class InputView {
     }
 
 
-    // 주문할 메뉴와 개수를 입력
+    // 2. 주문할 메뉴와 개수를 입력
     public String inputMenuCount() {
+        System.out.println(orderGuidance);
         String inputOrder = Console.readLine();
 
         try {
@@ -83,7 +88,6 @@ public class InputView {
         try {
             count = Integer.parseInt(menuCount);
         } catch (NumberFormatException e) {
-            System.out.println("숫자에러");
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_INPUT.getMessage());
         }
 
@@ -95,7 +99,6 @@ public class InputView {
     }
 
     public boolean MenuContains(String menuName, Menu[] allMenus) {
-
         // 1개의 메뉴라도 일치한다면
         for (Menu menu : allMenus) {
             String s = menu.getMenuName();
