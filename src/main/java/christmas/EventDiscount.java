@@ -7,15 +7,21 @@ import java.util.List;
 
 public class EventDiscount {
 
-    private final int[] christmasDayDiscount = new int[26];
+    private final int[] christmasDayDiscount = new int[32];
     private final int[] specialDiscount = new int[32];
-    private int totalAmount;
 
-    public EventDiscount(int totalAmount) {
-        this.totalAmount = totalAmount;
+
+    public EventDiscount() {
         initializeChristmasDayDiscount();
         initializeSpecialDiscount();
     }
+
+    // 이벤트 최소 참여 조건
+    public boolean eventMinimumCondition(int totalOrderCost) {
+        return totalOrderCost >= 10_000;
+    }
+
+
 
     // 크리스마스 D-day 이벤트 할인값 저장
     private void initializeChristmasDayDiscount() {
@@ -43,9 +49,11 @@ public class EventDiscount {
     }
 
     // 증정 이벤트 가격
-    public int giftPrice (Menu menuName, int count) {
-        int price = menuName.getPrice() * count;
-        return price;
+    public int giftPrice (Menu menuName, int count, int totalAmount) {
+        if (totalAmount < 120_000) {
+            return 0;
+        }
+        return menuName.getPrice() * count;
     }
 
 
