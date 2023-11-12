@@ -45,7 +45,7 @@ public enum Menu {
         String menuName = this.getMenuName();
         if (menuName.contains("양송이수프") || menuName.contains("타파스") || menuName.contains("시저샐러드")) {
             return MenuType.APPETIZER;
-        } else if (menuName.equals("티본스테이크") || menuName.equals("바비큐립") || menuName.contains("해산물파스타")) {
+        } else if (menuName.contains("티본스테이크") || menuName.equals("바비큐립") || menuName.contains("해산물파스타") || menuName.contains("크리스마스파스타")) {
             return MenuType.MAIN_COURSE;
         } else if (menuName.contains("초코케이크") || menuName.contains("아이스크림")) {
             return MenuType.DESSERT;
