@@ -1,10 +1,16 @@
 package christmas;
 
+import christmas.io.InputView;
+import christmas.io.OutputView;
 import christmas.menu.Menu;
+import christmas.order.EventDiscount;
+import christmas.order.OrderData;
+import christmas.order.TotalOrderAmount;
 
 import java.util.HashMap;
 
-import static christmas.menu.Menu.MenuType.*;
+import static christmas.menu.Menu.MenuType.DESSERT;
+import static christmas.menu.Menu.MenuType.MAIN_COURSE;
 
 
 public class ChristmasPromotion {
@@ -20,42 +26,12 @@ public class ChristmasPromotion {
         int userDay = inputView.visitDay(); // 현실 세계 날짜
         int visitDay = changedDay.getDay(userDay); // 날짜 변환
 
-
-//        String userMenuCount = inputView.inputMenuCount(); // 메뉴와 개수 입력
-//        orderData.saveMenuCount(userMenuCount); // 메뉴를 저장
-//        HashMap<String, Integer> menuCount = orderData.getMenuCount(); // 메뉴 저장
-//        HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount(); // 메뉴 타입별 개수 확인 가능
-
         String userMenuCount = inputView.inputMenuCount(); // 메뉴와 개수 입력
-
         orderData.saveMenuCount(userMenuCount); // 메뉴를 저장
         HashMap<String, Integer> menuCount = orderData.getMenuCount(); // 메뉴 저장
         HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount(); // 메뉴 타입별 개수 확인 가능
 
-        boolean onlyBeverage = false;
-        boolean menuOverLength = false;
-        int beverageCount = menuTypeCount.get(BEVERAGE.toString()); // 음료의 개수
-        int allmenu = 0;
-
-        for (String menu : menuCount.keySet()) {
-            allmenu += menuCount.get(menu);
-        }
-        if (allmenu == beverageCount) {
-            onlyBeverage = true;
-        }
-        if (allmenu > 20) {
-            menuOverLength = true;
-        }
-
-
-//        onlyBeverageCheck(onlyBeverage, menuOverLength);
-
-
-
-
-        // 메뉴는 최대 20개 까지만 주문 가능
         outputView.printShowBenefit(userDay); // 혜택 소개
-
 
         outputView.printOrderMenu(menuCount); // 메뉴 출력
 
@@ -70,12 +46,11 @@ public class ChristmasPromotion {
             return;
         }
 
-        // 증정 메뉴 = 샴페인 1개.
-        int giftCount = 1; //  // 증정 메뉴 수량 : 1개 설정(요구 사항)
+        // 증정 메뉴 = 샴페인(요구 사항)
+        int giftCount = 1; // 증정 메뉴 수량 : 1개 설정(요구 사항)
         String giftMenu = eventDiscount.giftMenu(totalOrderCost, giftCount);
         int giftPrice = eventDiscount.giftPrice(Menu.CHAMPAGNE, giftCount, totalOrderCost); // 증정 메뉴 가격
         outputView.printGiftMenu(giftMenu); // 증명 메뉴 출력
-
 
         // 1. 크리스마스 할인
         int christmasDiscount = eventDiscount.getChristmasDayDiscount(userDay);
@@ -118,7 +93,7 @@ public class ChristmasPromotion {
         return false;
     }
 
-    // 총 주문금액 계산
+    // 총 주문 금액 계산
     public int calculateTotalOrderCost(HashMap<String, Integer> menuCount) {
         totalOrderAmount.calculateOrderTotal(menuCount); // 총 주문 금액 계산
         int totalOrderCost = totalOrderAmount.getTotalOrderAmount(); // 총 주문 금액

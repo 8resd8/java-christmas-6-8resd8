@@ -1,4 +1,6 @@
-package christmas;
+package christmas.order;
+
+import christmas.menu.MenuPrices;
 
 import java.util.HashMap;
 
@@ -6,7 +8,7 @@ public class TotalOrderAmount {
     MenuPrices menuPrices = new MenuPrices();
     private int totalOrderAmount;
 
-    int getTotalOrderAmount() {
+    public int getTotalOrderAmount() {
         return totalOrderAmount;
     }
 
@@ -20,7 +22,7 @@ public class TotalOrderAmount {
     }
 
     // 총 주문 금액 저장
-    private void saveTotalAmount(int price, int totalPrice) {
+    public void saveTotalAmount(int price, int totalPrice) {
         totalOrderAmount += price * totalPrice;
     }
 

@@ -1,9 +1,11 @@
-package christmas;
+package christmas.io;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.menu.ErrorMessage;
-import christmas.menu.EventDay;
+
+import christmas.EventDay;
 import christmas.menu.Menu;
+import christmas.message.ErrorMessage;
+import christmas.order.OrderData;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

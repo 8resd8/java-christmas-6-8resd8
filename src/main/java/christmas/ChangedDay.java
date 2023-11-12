@@ -1,6 +1,4 @@
-package christmas;
-
-import christmas.menu.EventDay;
+package christmas; // util 클래스 1개이므로 패키지 분리 x
 
 import java.util.Calendar;
 
@@ -8,6 +6,7 @@ public class ChangedDay {
     Calendar calendar;
 
     public int getDay(int userDay) {
+
         calendar = Calendar.getInstance();
         int year = EventDay.YEAR.getValue();
         int month = EventDay.MONTH.getValue();
