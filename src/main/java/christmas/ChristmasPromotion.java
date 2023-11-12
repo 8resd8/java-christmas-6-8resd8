@@ -4,8 +4,7 @@ import christmas.menu.Menu;
 
 import java.util.HashMap;
 
-import static christmas.menu.Menu.MenuType.DESSERT;
-import static christmas.menu.Menu.MenuType.MAIN_COURSE;
+import static christmas.menu.Menu.MenuType.*;
 
 
 public class ChristmasPromotion {
@@ -20,12 +19,44 @@ public class ChristmasPromotion {
     public void eventStart() {
         int userDay = inputView.visitDay(); // 현실 세계 날짜
         int visitDay = changedDay.getDay(userDay); // 날짜 변환
+
+
+//        String userMenuCount = inputView.inputMenuCount(); // 메뉴와 개수 입력
+//        orderData.saveMenuCount(userMenuCount); // 메뉴를 저장
+//        HashMap<String, Integer> menuCount = orderData.getMenuCount(); // 메뉴 저장
+//        HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount(); // 메뉴 타입별 개수 확인 가능
+
         String userMenuCount = inputView.inputMenuCount(); // 메뉴와 개수 입력
 
         orderData.saveMenuCount(userMenuCount); // 메뉴를 저장
+        HashMap<String, Integer> menuCount = orderData.getMenuCount(); // 메뉴 저장
+        HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount(); // 메뉴 타입별 개수 확인 가능
+
+        boolean onlyBeverage = false;
+        boolean menuOverLength = false;
+        int beverageCount = menuTypeCount.get(BEVERAGE.toString()); // 음료의 개수
+        int allmenu = 0;
+
+        for (String menu : menuCount.keySet()) {
+            allmenu += menuCount.get(menu);
+        }
+        if (allmenu == beverageCount) {
+            onlyBeverage = true;
+        }
+        if (allmenu > 20) {
+            menuOverLength = true;
+        }
+
+
+//        onlyBeverageCheck(onlyBeverage, menuOverLength);
+
+
+
+
+        // 메뉴는 최대 20개 까지만 주문 가능
         outputView.printShowBenefit(userDay); // 혜택 소개
 
-        HashMap<String, Integer> menuCount = orderData.getMenuCount(); // 메뉴 종류별 합계 저장
+
         outputView.printOrderMenu(menuCount); // 메뉴 출력
 
 
@@ -48,7 +79,6 @@ public class ChristmasPromotion {
 
         // 1. 크리스마스 할인
         int christmasDiscount = eventDiscount.getChristmasDayDiscount(userDay);
-        HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount(); // 메뉴 타입별 개수 확인 가능
 
         // 2. 평일 = 디저트 메뉴 할인
         int weekDiscount = eventDiscount.weekdayDiscount(menuTypeCount.get(DESSERT.toString()), visitDay);

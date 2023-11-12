@@ -55,7 +55,7 @@ public class OrderData {
                 return menu.getType();
             }
         }
-        // 해당하는 메뉴가 없을 경우 기본값으로 BEVERAGE를 반환
-        return Menu.MenuType.BEVERAGE;
+        // 메뉴가 없다면 null반환
+        return null;
     }
 }
