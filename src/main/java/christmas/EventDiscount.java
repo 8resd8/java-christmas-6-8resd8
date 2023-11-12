@@ -9,6 +9,7 @@ public class EventDiscount {
 
     private final int[] christmasDayDiscount = new int[32];
     private final int[] specialDiscount = new int[32];
+    private final int giftRole = 120_000;
 
 
     public EventDiscount() {
@@ -18,42 +19,42 @@ public class EventDiscount {
 
     // 이벤트 최소 참여 조건
     public boolean eventMinimumCondition(int totalOrderCost) {
-        return totalOrderCost >= 10_000;
+        int minimumAmount = 10_000;
+        return totalOrderCost >= minimumAmount;
     }
-
 
 
     // 크리스마스 D-day 이벤트 할인값 저장
     private void initializeChristmasDayDiscount() {
-        int discount = 1000;
+        int discount = -1000;
         for (int i = 1; i <= 25; i++) {
-            christmasDayDiscount[i] = discount + ((i - 1) * 100);
+            christmasDayDiscount[i] = discount + ((i - 1) * (-100));
         }
     }
 
-    // 특별 할인 (별표시)
+    // 특별 할인 (별 표시되어있는 날짜)
     private void initializeSpecialDiscount() {
         List<Integer> days = List.of(3, 10, 17, 24, 25);
         for (int day : days) {
-            specialDiscount[day] = 1000;
+            specialDiscount[day] = -1000;
         }
     }
 
     // 증정 이벤트: 할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개 증정
     public String giftMenu (int totalAmount, int count) {
-        if (totalAmount >= 120_000) {
-            String giftmenu = Menu.CHAMPAGNE.getMenuName();
-            return giftmenu + " " + count + "개";
+        if (totalAmount >= giftRole) {
+            String giftMenu = Menu.CHAMPAGNE.getMenuName();
+            return giftMenu + " " + count + "개";
         }
         return "없음";
     }
 
     // 증정 이벤트 가격
     public int giftPrice (Menu menuName, int count, int totalAmount) {
-        if (totalAmount < 120_000) {
+        if (totalAmount < giftRole) {
             return 0;
         }
-        return menuName.getPrice() * count;
+        return -1 * menuName.getPrice() * count;
     }
 
 
@@ -66,7 +67,7 @@ public class EventDiscount {
     // 일요일 = 1 ~ 토요일 = 7
     public int weekdayDiscount(int dessertCount, int day) {
         if (day <= 5) {
-            return dessertCount * EventDay.YEAR.getValue();
+            return -1 * dessertCount * EventDay.YEAR.getValue();
         }
         return 0;
     }
@@ -74,7 +75,7 @@ public class EventDiscount {
     // 주말 할인(금요일, 토요일): 주말에는 메인 메뉴를 메뉴 1개당 2,023원 할인
     public int weekendDiscount(int mainCount, int day) {
         if (day <= 7 && day >= 6) {
-            return mainCount * EventDay.YEAR.getValue();
+            return -1 * mainCount * EventDay.YEAR.getValue();
         }
         return 0;
     }

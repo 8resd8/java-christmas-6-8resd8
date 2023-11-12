@@ -42,24 +42,22 @@ public class OutputView {
 
     public void printBenefitLists(int christmasDiscount, int weekDiscount, int weekendDiscount, int specialDiscount, int giftPrice) {
         System.out.println("<혜택 내역>");
-        if (christmasDiscount != 0) {
-            System.out.println("크리스마스 디데이 할인: " + nf.format(christmasDiscount) + "원");
-        }
-        if (weekDiscount != 0) {
-            System.out.println("평일 할인: " + nf.format(weekDiscount) + "원");
-        }
-        if (weekendDiscount != 0) {
-            System.out.println("주말 할인: " + nf.format(weekendDiscount) + "원");
-        }
-        if (specialDiscount != 0) {
-            System.out.println("특별 할인: " + nf.format(specialDiscount) + "원");
-        }
 
-        if (giftPrice != 0) {
-            System.out.println("증정 이벤트: " + nf.format(giftPrice) + "원");
+        String[] benefitNames = {"크리스마스 디데이 할인", "평일 할인", "주말 할인", "특별 할인", "증정 이벤트"};
+        int[] benefitDiscounts = {christmasDiscount, weekDiscount, weekendDiscount, specialDiscount, giftPrice};
+        boolean anyDiscount = false;
+
+        for (int i = 0; i < benefitNames.length; i++) {
+            int discount = benefitDiscounts[i];
+            if (discount != 0) {
+                System.out.println(benefitNames[i] + ": " + nf.format(discount) + "원");
+                anyDiscount = true;
+            }
+        }
+        if (!anyDiscount) {
+            System.out.println("없음");
         }
         System.out.println();
-
     }
 
     public void printTotalOrderDiscount(int totalOrderDiscount) {
