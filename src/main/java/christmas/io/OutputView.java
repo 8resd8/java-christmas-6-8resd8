@@ -17,7 +17,7 @@ public class OutputView {
     }
 
     public void printShowBenefit(int day) {
-        System.out.println(String.format(introduceEventBenefits, day));
+        System.out.printf((introduceEventBenefits) + "%n", day);
     }
 
     public void printOrderMenu(HashMap<String, Integer> menuCount) {

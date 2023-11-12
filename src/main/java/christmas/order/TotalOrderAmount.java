@@ -26,11 +26,4 @@ public class TotalOrderAmount {
         totalOrderAmount += price * totalPrice;
     }
 
-    // 증정 메뉴 확인, 총 구매 금액 넣어서 사용
-    public String giftMenu(int totalOrderAmount) {
-        EventDiscount eventDiscount = new EventDiscount();
-        return eventDiscount.giftMenu(totalOrderAmount, 1);
-    }
-
-
 }

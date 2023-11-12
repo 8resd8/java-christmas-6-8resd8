@@ -45,7 +45,7 @@ public class OrderData {
     // 메뉴 별 합계를 저장
     public void saveMenuTypeCount(Menu.MenuType menuType, int count) {
         String menu = menuType.toString();
-        menuTypeCount.put(menu, menuTypeCount.getOrDefault(menu.toString(), 0) + count);
+        menuTypeCount.put(menu, menuTypeCount.getOrDefault(menu, 0) + count);
     }
 
     // 메뉴 별 종류를 얻기
@@ -55,7 +55,7 @@ public class OrderData {
                 return menu.getType();
             }
         }
-        // 메뉴가 없다면 null반환
+        // 메뉴가 없다면 null 반환
         return null;
     }
 }
