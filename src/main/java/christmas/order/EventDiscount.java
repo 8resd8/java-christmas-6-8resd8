@@ -9,7 +9,10 @@ public class EventDiscount {
 
     private final int[] christmasDayDiscount = new int[32];
     private final int[] specialDiscount = new int[32];
-    private final int giftRole = 120_000;
+    private final int GIFT_ROLE = 120_000;
+    private final int MINIMUM_ORDER_AMOUNT = 10_000;
+    private final List<Integer> SPECIAL_DISCOUNT_DAYS = List.of(3, 10, 17, 24, 25);
+    private final int DISCOUNT = -1000;
 
 
     public EventDiscount() {
@@ -19,30 +22,27 @@ public class EventDiscount {
 
     // 이벤트 최소 참여 조건
     public boolean eventMinimumCondition(int totalOrderCost) {
-        int minimumAmount = 10_000;
-        return totalOrderCost >= minimumAmount;
+        return totalOrderCost >= MINIMUM_ORDER_AMOUNT;
     }
 
 
     // 크리스마스 D-day 이벤트 할인값 저장
     private void initializeChristmasDayDiscount() {
-        int discount = -1000;
         for (int i = 1; i <= 25; i++) {
-            christmasDayDiscount[i] = discount + ((i - 1) * (-100));
+            christmasDayDiscount[i] = DISCOUNT + ((i - 1) * (-100));
         }
     }
 
     // 특별 할인 (별 표시되어있는 날짜)
     private void initializeSpecialDiscount() {
-        List<Integer> days = List.of(3, 10, 17, 24, 25);
-        for (int day : days) {
-            specialDiscount[day] = -1000;
+        for (int day : SPECIAL_DISCOUNT_DAYS) {
+            specialDiscount[day] = DISCOUNT;
         }
     }
 
     // 증정 이벤트: 할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개 증정
     public String giftMenu (int totalAmount, int count) {
-        if (totalAmount >= giftRole) {
+        if (totalAmount >= GIFT_ROLE) {
             String giftMenu = Menu.CHAMPAGNE.getMenuName();
             return giftMenu + " " + count + "개";
         }
@@ -51,7 +51,7 @@ public class EventDiscount {
 
     // 증정 이벤트 가격
     public int giftPrice (Menu menuName, int count, int totalAmount) {
-        if (totalAmount < giftRole) {
+        if (totalAmount < GIFT_ROLE) {
             return 0;
         }
         return -1 * menuName.getPrice() * count;
@@ -85,7 +85,7 @@ public class EventDiscount {
         return specialDiscount[day];
     }
 
-    // 총 혜택 금액에 따라 12월 이벤트 배지 부여
+    // 총 혜택 금액에 따라 12월 이벤트 배지 부여 (요구사항 기준 2만, 1만, 5천)
     public String eventBadge (int discountTotal) {
         if (discountTotal >= 20_000) {
             return "별";

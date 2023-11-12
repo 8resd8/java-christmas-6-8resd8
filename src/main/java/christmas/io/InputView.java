@@ -129,14 +129,15 @@ public class InputView {
         }
 
         // 1이상의 숫자  || 메뉴가 존재하는가                        ||  중복 메뉴가 있는가
-        if (count <= 0 || !MenuContains(menuName, Menu.values()) || checkOrder.containsKey(menuName)) {
+        if (count <= 0 || !MenuContains(menuName) || checkOrder.containsKey(menuName)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_INPUT.getMessage());
         }
         checkOrder.put(menuName, count);
     }
 
     // 중복된 메뉴 확인
-    public boolean MenuContains(String menuName, Menu[] allMenus) {
+    public boolean MenuContains(String menuName) {
+        Menu[] allMenus = Menu.values();
         for (Menu menu : allMenus) {
             String s = menu.getMenuName();
             if (s.equals(menuName)) {
