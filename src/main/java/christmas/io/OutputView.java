@@ -13,7 +13,6 @@ public class OutputView {
 
     public OutputView() {
         nf.setGroupingUsed(true);
-
     }
 
     public void printShowBenefit(int day) {
@@ -62,8 +61,8 @@ public class OutputView {
     }
 
     public void printTotalOrderDiscount(int totalOrderDiscount) {
-        System.out.println("<총 혜택 금액>");
-        System.out.println(nf.format(totalOrderDiscount) + "원"); // 증정 이벤트의 가격도 포함
+        System.out.println("<총혜택 금액>");
+        System.out.println(nf.format(totalOrderDiscount) + "원");
         System.out.println();
     }
 
@@ -77,8 +76,5 @@ public class OutputView {
         System.out.println("<" + EventDay.MONTH.getValue() + "월 이벤트 배지>");
         System.out.println(eventBadge);
     }
-
-
-
 
 }
