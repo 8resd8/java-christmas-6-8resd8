@@ -55,7 +55,6 @@ public class OrderData {
                 return menu.getType();
             }
         }
-        // 메뉴가 없다면 null 반환
-        return null;
+        return null; // 메뉴가 없는 경우
     }
 }
