@@ -64,7 +64,6 @@ public class EventDiscount {
     }
 
     // 평일 할인(일요일 ~ 목요일): 평일에는 디저트 메뉴를 메뉴 1개당 2,023원 할인
-    // 일요일 = 1 ~ 토요일 = 7
     public int weekdayDiscount(int dessertCount, int day) {
         if (day <= 5) {
             return -1 * dessertCount * EventDay.YEAR.getValue();
@@ -85,7 +84,7 @@ public class EventDiscount {
         return specialDiscount[day];
     }
 
-    // 총 혜택 금액에 따라 12월 이벤트 배지 부여 (요구사항 기준 2만, 1만, 5천)
+    // 총 혜택 금액에 따라 12월 이벤트 배지 부여 (요구사항 : 2만, 1만, 5천)
     public String eventBadge (int discountTotal) {
         if (discountTotal >= 20_000) {
             return "별";
