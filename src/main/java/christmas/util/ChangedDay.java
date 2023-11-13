@@ -1,4 +1,6 @@
-package christmas; // util 클래스 1개이므로 패키지 분리 x
+package christmas.util; // util 클래스 1개이므로 패키지 분리 x
+
+import christmas.EventDay;
 
 import java.util.Calendar;
 
@@ -15,7 +17,6 @@ public class ChangedDay {
     }
 
     private int getDayOfWeek(Calendar calendar) {
-        // 요일을 숫자로 가져오고, 숫자를 1부터 7로 변환
-        return calendar.get(Calendar.DAY_OF_WEEK);
+        return calendar.get(Calendar.DAY_OF_WEEK); // 요일을 숫자로 가져오고, 숫자를 1부터 7로 변환
     }
 }
