@@ -1,6 +1,5 @@
-package christmas;
+package christmas.io;
 
-import christmas.io.InputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
