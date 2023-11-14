@@ -45,6 +45,13 @@ class InputViewTest {
         assertDoesNotThrow(() -> inputView.isValidNumberRange(visitDay, 1, 31));
     }
 
+    @DisplayName("방문 날짜 비정상 테스트")
+    @ParameterizedTest
+    @ValueSource(strings = {"0", "-1", "32", "99"})
+    public void isValidNumberRangeTest(String visitDay) {
+        assertThrows(IllegalArgumentException.class, () -> inputView.isValidNumberRange(visitDay, 1, 31));
+    }
+
     @Test
     @DisplayName("21개 메뉴 초과 테스트")
     void validEventOverLengthTest() {
@@ -68,6 +75,7 @@ class InputViewTest {
     }
 
     @Test
+    @DisplayName("메뉴, 개수값 테스트")
     void isConditionTest() {
         HashMap<String, Integer> checkOrder = new LinkedHashMap<>();
         assertThrows(IllegalArgumentException.class, () -> inputView.isCondition("티본스테이크", "0", checkOrder));

@@ -1,6 +1,5 @@
 package christmas.message;
 
-import christmas.message.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

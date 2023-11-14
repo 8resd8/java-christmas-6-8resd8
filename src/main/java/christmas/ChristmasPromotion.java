@@ -6,6 +6,7 @@ import christmas.menu.Menu;
 import christmas.order.EventDiscount;
 import christmas.order.OrderData;
 import christmas.order.TotalOrderAmount;
+import christmas.util.ChangeDay;
 
 import java.util.HashMap;
 
@@ -15,12 +16,21 @@ import static christmas.menu.Menu.MenuType.MAIN_COURSE;
 
 public class ChristmasPromotion {
 
-    private final InputView inputView = new InputView();
-    private final ChangedDay changedDay = new ChangedDay();
-    private final OutputView outputView = new OutputView();
-    private final OrderData orderData = new OrderData();
-    private final EventDiscount eventDiscount = new EventDiscount();
-    private final TotalOrderAmount totalOrderAmount = new TotalOrderAmount();
+    private final InputView inputView;
+    private final ChangeDay changedDay;
+    private final OutputView outputView;
+    private final OrderData orderData;
+    private final EventDiscount eventDiscount;
+    private final TotalOrderAmount totalOrderAmount;
+
+    public ChristmasPromotion(InputView inputView, ChangeDay changedDay, OutputView outputView, OrderData orderData, EventDiscount eventDiscount, TotalOrderAmount totalOrderAmount) {
+        this.inputView = inputView;
+        this.changedDay = changedDay;
+        this.outputView = outputView;
+        this.orderData = orderData;
+        this.eventDiscount = eventDiscount;
+        this.totalOrderAmount = totalOrderAmount;
+    }
 
     public void eventStart() {
         int userDay = inputView.visitDay(); // 현실 세계 날짜

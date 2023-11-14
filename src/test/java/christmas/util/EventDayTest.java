@@ -1,6 +1,6 @@
-package christmas;
+package christmas.util;
 
-import christmas.EventDay;
+import christmas.util.EventDay;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

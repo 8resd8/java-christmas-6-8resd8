@@ -1,6 +1,6 @@
 package christmas.order;
 
-import christmas.EventDay;
+import christmas.util.EventDay;
 import christmas.menu.Menu;
 
 import java.util.List;

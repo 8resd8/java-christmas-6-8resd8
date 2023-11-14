@@ -2,7 +2,7 @@ package christmas.io;
 
 import camp.nextstep.edu.missionutils.Console;
 
-import christmas.EventDay;
+import christmas.util.EventDay;
 import christmas.menu.Menu;
 import christmas.message.ErrorMessage;
 import christmas.order.OrderData;

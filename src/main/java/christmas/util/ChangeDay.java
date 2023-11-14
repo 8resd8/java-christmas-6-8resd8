@@ -1,10 +1,8 @@
 package christmas.util; // util 클래스 1개이므로 패키지 분리 x
 
-import christmas.EventDay;
-
 import java.util.Calendar;
 
-public class ChangedDay {
+public class ChangeDay {
     Calendar calendar;
 
     public int getDay(int userDay) {

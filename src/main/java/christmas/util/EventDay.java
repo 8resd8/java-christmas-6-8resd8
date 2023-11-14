@@ -1,4 +1,4 @@
-package christmas;
+package christmas.util;
 
 public enum EventDay {
     YEAR(2023),

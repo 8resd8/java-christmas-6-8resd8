@@ -1,7 +1,7 @@
 package christmas.io;
 
 
-import christmas.EventDay;
+import christmas.util.EventDay;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
