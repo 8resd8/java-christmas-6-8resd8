@@ -17,7 +17,7 @@ import static christmas.menu.Menu.MenuType.MAIN_COURSE;
 public class ChristmasPromotion {
 
     private final InputView inputView;
-    private final ChangeDay changedDay;
+    private final ChangeDay changeDay;
     private final OutputView outputView;
     private final OrderData orderData;
     private final EventDiscount eventDiscount;
@@ -25,7 +25,7 @@ public class ChristmasPromotion {
 
     public ChristmasPromotion(InputView inputView, ChangeDay changedDay, OutputView outputView, OrderData orderData, EventDiscount eventDiscount, TotalOrderAmount totalOrderAmount) {
         this.inputView = inputView;
-        this.changedDay = changedDay;
+        this.changeDay = changedDay;
         this.outputView = outputView;
         this.orderData = orderData;
         this.eventDiscount = eventDiscount;
@@ -33,30 +33,30 @@ public class ChristmasPromotion {
     }
 
     public void eventStart() {
-        int userDay = inputView.visitDay(); // 현실 세계 날짜
-        int visitDay = changedDay.getDay(userDay); // 날짜 변환
-
-        String userMenuCount = inputView.inputMenuCount(); // 메뉴와 개수 입력
-        orderData.saveMenuCount(userMenuCount); // 메뉴를 저장
-        HashMap<String, Integer> menuCount = orderData.getMenuCount(); // 메뉴 저장
-        HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount(); // 메뉴 타입별 개수 확인 가능
+        int userDay = getUserDay(); // 현실 세계 날짜
+        int computerDay = getVisitDay(userDay); // 날짜 변환
+        HashMap<String, Integer> menuCount = processUserMenuCount(); // 메뉴와 개수 입력
 
         outputView.printShowBenefit(userDay); // 혜택 소개
-
         outputView.printOrderMenu(menuCount); // 메뉴 출력
-
 
         // 총주문 금액 계산
         int totalOrderCost = calculateTotalOrderCost(menuCount);
 
         boolean eventTicket = eventDiscount.eventMinimumCondition(totalOrderCost); // 이벤트 최소 참여 조건 체크
 
-        // 만원 미만 구매시
-        if (noEventCase(eventTicket, totalOrderCost)) {
+        // 1만원 이상이면 이벤트 진행
+        if (eventTicket) {
+            noEventCase((totalOrderCost));
             return;
         }
 
-        // 증정 메뉴 = 샴페인(요구 사항)
+        processEvent(totalOrderCost, userDay, computerDay);
+    }
+
+    private void processEvent(int totalOrderCost, int userDay, int computerDay) {
+        HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount();
+
         int giftCount = 1; // 증정 메뉴 수량 : 1개 설정(요구 사항)
         String giftMenu = eventDiscount.giftMenu(totalOrderCost, giftCount);
         int giftPrice = eventDiscount.giftPrice(Menu.CHAMPAGNE, giftCount, totalOrderCost); // 증정 메뉴 가격
@@ -66,10 +66,10 @@ public class ChristmasPromotion {
         int christmasDiscount = eventDiscount.getChristmasDayDiscount(userDay);
 
         // 2. 평일 = 디저트 메뉴 할인
-        int weekDiscount = eventDiscount.weekdayDiscount(menuTypeCount.get(DESSERT.toString()), visitDay);
+        int weekDiscount = eventDiscount.weekdayDiscount(menuTypeCount.get(DESSERT.toString()), computerDay);
 
         // 3. 주말 = 메인 메뉴 할인
-        int weekendDiscount = eventDiscount.weekendDiscount(menuTypeCount.get(MAIN_COURSE.toString()), visitDay); // 각 메뉴마다 합을 저장해야해.
+        int weekendDiscount = eventDiscount.weekendDiscount(menuTypeCount.get(MAIN_COURSE.toString()), computerDay); // 각 메뉴마다 합을 저장해야해.
 
         // 4. 특별 할인 = 별이 있으면 총 주문 금액에서 1,000원 할인
         int specialDiscount = eventDiscount.getSpecialDiscount(userDay);
@@ -88,19 +88,31 @@ public class ChristmasPromotion {
         // 증정 이벤트는 포함하지 않는 혜택 금액을 줘야함.
         String eventBadge = eventDiscount.eventBadge(totalOrderDiscount);
         outputView.printEventBadge(eventBadge);
+
+    }
+
+
+    private HashMap<String, Integer> processUserMenuCount() {
+        String userMenuCount = inputView.inputMenuCount();
+        orderData.saveMenuCount(userMenuCount);
+        return orderData.getMenuCount();
+    }
+
+    private int getVisitDay(int userDay) {
+        return changeDay.getDay(userDay);
+    }
+
+    private int getUserDay() {
+        return inputView.visitDay();
     }
 
     // 만원 미만 구입시
-    public boolean noEventCase(boolean eventTicket, int totalOrderCost) {
-        if (!eventTicket) {
-            outputView.printGiftMenu("없음"); // 증정메뉴
-            outputView.printBenefitLists(0, 0, 0, 0, 0); // 혜택 내역
-            outputView.printTotalOrderDiscount(0); // 총혜택 금액
-            outputView.printBill(totalOrderCost);
-            outputView.printEventBadge("없음");
-            return true;
-        }
-        return false;
+    public void noEventCase(int totalOrderCost) {
+        outputView.printGiftMenu("없음"); // 증정메뉴
+        outputView.printBenefitLists(0, 0, 0, 0, 0); // 혜택 내역
+        outputView.printTotalOrderDiscount(0); // 총혜택 금액
+        outputView.printBill(totalOrderCost);
+        outputView.printEventBadge("없음");
     }
 
     // 총 주문 금액 계산
