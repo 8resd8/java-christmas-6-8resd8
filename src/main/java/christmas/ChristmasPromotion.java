@@ -33,65 +33,53 @@ public class ChristmasPromotion {
     }
 
     public void eventStart() {
-        int userDay = getUserDay(); // 현실 세계 날짜
-        int computerDay = getVisitDay(userDay); // 날짜 변환
+        int userDay = getUserDay(); // 사용자 방문 날짜
+        int computerDay = getVisitDay(userDay); // 날짜 변환 (일요일 : 1)
         HashMap<String, Integer> menuCount = processUserMenuCount(); // 메뉴와 개수 입력
 
-        outputView.printShowBenefit(userDay); // 혜택 소개
-        outputView.printOrderMenu(menuCount); // 메뉴 출력
-
-        // 총주문 금액 계산
-        int totalOrderCost = calculateTotalOrderCost(menuCount);
+        printGuideAndMenu(userDay, menuCount);
+        int totalOrderCost = calculateTotalOrderCost(menuCount); // 총주문 금액 계산
 
         boolean eventTicket = eventDiscount.eventMinimumCondition(totalOrderCost); // 이벤트 최소 참여 조건 체크
-
-        // 1만원 이상이면 이벤트 진행
-        if (eventTicket) {
+        if (!eventTicket) { // 1만원 미만 혜택 없음
             noEventCase((totalOrderCost));
             return;
         }
 
-        processEvent(totalOrderCost, userDay, computerDay);
+        processEvent(totalOrderCost, userDay, computerDay, orderData.getMenuTypeCount());
     }
 
-    private void processEvent(int totalOrderCost, int userDay, int computerDay) {
-        HashMap<String, Integer> menuTypeCount = orderData.getMenuTypeCount();
+    private void printGuideAndMenu(int userDay, HashMap<String, Integer> menuCount) {
+        outputView.printShowBenefit(userDay); // 혜택 소개
+        outputView.printOrderMenu(menuCount); // 메뉴 출력
+    }
 
+    private void processEvent(int totalOrderCost, int userDay, int computerDay, HashMap<String, Integer> menuTypeCount) {
         int giftCount = 1; // 증정 메뉴 수량 : 1개 설정(요구 사항)
         String giftMenu = eventDiscount.giftMenu(totalOrderCost, giftCount);
         int giftPrice = eventDiscount.giftPrice(Menu.CHAMPAGNE, giftCount, totalOrderCost); // 증정 메뉴 가격
-        outputView.printGiftMenu(giftMenu); // 증명 메뉴 출력
 
-        // 1. 크리스마스 할인
+        // 크리스마스D-day, 평일, 주말, 특별 할인
         int christmasDiscount = eventDiscount.getChristmasDayDiscount(userDay);
-
-        // 2. 평일 = 디저트 메뉴 할인
         int weekDiscount = eventDiscount.weekdayDiscount(menuTypeCount.get(DESSERT.toString()), computerDay);
-
-        // 3. 주말 = 메인 메뉴 할인
         int weekendDiscount = eventDiscount.weekendDiscount(menuTypeCount.get(MAIN_COURSE.toString()), computerDay); // 각 메뉴마다 합을 저장해야해.
-
-        // 4. 특별 할인 = 별이 있으면 총 주문 금액에서 1,000원 할인
         int specialDiscount = eventDiscount.getSpecialDiscount(userDay);
-
-        // 5. 증정 이벤트 표시 = 총 주문 금액이 12만원 이상이라면 샴페인 1개
-        outputView.printBenefitLists(christmasDiscount, weekDiscount, weekendDiscount, specialDiscount, giftPrice);
-
-        // 총 혜택 금액
         int totalOrderDiscount = christmasDiscount + weekDiscount + weekendDiscount + specialDiscount;
-        outputView.printTotalOrderDiscount(totalOrderDiscount + giftPrice);
 
-        // 할인 후 에상 금액, 혜택금액은 (-)값
-        int finalOrderAmount = totalOrderCost + totalOrderDiscount;
-        outputView.printBill(finalOrderAmount);
-
-        // 증정 이벤트는 포함하지 않는 혜택 금액을 줘야함.
         String eventBadge = eventDiscount.eventBadge(totalOrderDiscount);
-        outputView.printEventBadge(eventBadge);
 
+        printEventResults(giftMenu, christmasDiscount, weekDiscount, weekendDiscount, specialDiscount, giftPrice, totalOrderCost, totalOrderDiscount, eventBadge);
     }
 
+    private void printEventResults(String giftMenu, int christmasDiscount, int weekDiscount, int weekendDiscount, int specialDiscount, int giftPrice, int totalOrderCost, int totalOrderDiscount, String eventBadge) {
+        outputView.printGiftMenu(giftMenu); // 증정 메뉴
+        outputView.printBenefitLists(christmasDiscount, weekDiscount, weekendDiscount, specialDiscount, giftPrice); // 혜택 내역
+        outputView.printTotalOrderDiscount(totalOrderDiscount + giftPrice); // 총 혜택 금액
+        outputView.printBill(totalOrderCost + totalOrderDiscount); // 할인 후 예상 결제 금액
+        outputView.printEventBadge(eventBadge); // 이벤트 배지
+    }
 
+    // 메뉴 이름 가격 저장
     private HashMap<String, Integer> processUserMenuCount() {
         String userMenuCount = inputView.inputMenuCount();
         orderData.saveMenuCount(userMenuCount);

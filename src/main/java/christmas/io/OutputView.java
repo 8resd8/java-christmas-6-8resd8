@@ -42,7 +42,6 @@ public class OutputView {
 
     public void printBenefitLists(int christmasDiscount, int weekDiscount, int weekendDiscount, int specialDiscount, int giftPrice) {
         System.out.println("<혜택 내역>");
-
         String[] benefitNames = {"크리스마스 디데이 할인", "평일 할인", "주말 할인", "특별 할인", "증정 이벤트"};
         int[] benefitDiscounts = {christmasDiscount, weekDiscount, weekendDiscount, specialDiscount, giftPrice};
         boolean anyDiscount = false;
