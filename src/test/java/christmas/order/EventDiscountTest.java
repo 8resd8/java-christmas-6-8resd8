@@ -88,8 +88,8 @@ public class EventDiscountTest {
     @DisplayName("이벤트 배지 부여 테스트")
     public void testEventBadge() {
         assertEquals("없음", eventDiscount.eventBadge(0));
-        assertEquals("산타", eventDiscount.eventBadge(5_000));
+        assertEquals("별", eventDiscount.eventBadge(5_000));
         assertEquals("트리", eventDiscount.eventBadge(10_000));
-        assertEquals("별", eventDiscount.eventBadge(20_000));
+        assertEquals("산타", eventDiscount.eventBadge(20_000));
     }
 }

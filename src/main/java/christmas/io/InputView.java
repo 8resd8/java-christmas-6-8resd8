@@ -128,7 +128,7 @@ public class InputView {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_INPUT.getMessage());
         }
 
-        // 1이상의 숫자  || 메뉴가 존재하는가                        ||  중복 메뉴가 있는가
+        // 1이상의 숫자 || 메뉴가 존재하는가          ||  중복 메뉴가 있는가
         if (count <= 0 || !MenuContains(menuName) || checkOrder.containsKey(menuName)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_INPUT.getMessage());
         }

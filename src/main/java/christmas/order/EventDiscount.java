@@ -88,13 +88,13 @@ public class EventDiscount {
     public String eventBadge (int discountTotal) {
         discountTotal = Math.abs(discountTotal);
         if (discountTotal >= 20_000) {
-            return "별";
+            return "산타";
         }
         if (discountTotal >= 10_000) {
             return "트리";
         }
         if (discountTotal >= 5_000) {
-            return "산타";
+            return "별";
         }
         return "없음";
     }
