@@ -12,7 +12,8 @@ public class EventDiscount {
     private final int GIFT_ROLE = 120_000;
     private final int MINIMUM_ORDER_AMOUNT = 10_000;
     private final List<Integer> SPECIAL_DISCOUNT_DAYS = List.of(3, 10, 17, 24, 25);
-    private final int DISCOUNT = -1000;
+    private final int DEFAULT_DISCOUNT = -1000;
+    private final int INCREASE_OF_HUNDRED = -100;
 
 
     public EventDiscount() {
@@ -29,14 +30,14 @@ public class EventDiscount {
     // 크리스마스 D-day 이벤트 할인값 저장
     private void initializeChristmasDayDiscount() {
         for (int i = 1; i <= 25; i++) {
-            christmasDayDiscount[i] = DISCOUNT + ((i - 1) * (-100));
+            christmasDayDiscount[i] = DEFAULT_DISCOUNT + ((i - 1) * INCREASE_OF_HUNDRED);
         }
     }
 
     // 특별 할인 (별 표시되어있는 날짜)
     private void initializeSpecialDiscount() {
         for (int day : SPECIAL_DISCOUNT_DAYS) {
-            specialDiscount[day] = DISCOUNT;
+            specialDiscount[day] = DEFAULT_DISCOUNT;
         }
     }
 
@@ -86,14 +87,14 @@ public class EventDiscount {
 
     // 총 혜택 금액에 따라 12월 이벤트 배지 부여 (요구사항 : 2만, 1만, 5천)
     public String eventBadge (int discountTotal) {
-        discountTotal = Math.abs(discountTotal);
-        if (discountTotal >= 20_000) {
+        int absDiscountTotal = Math.abs(discountTotal);
+        if (absDiscountTotal >= 20_000) {
             return "산타";
         }
-        if (discountTotal >= 10_000) {
+        if (absDiscountTotal >= 10_000) {
             return "트리";
         }
-        if (discountTotal >= 5_000) {
+        if (absDiscountTotal >= 5_000) {
             return "별";
         }
         return "없음";
