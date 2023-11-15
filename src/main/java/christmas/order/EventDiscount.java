@@ -88,15 +88,6 @@ public class EventDiscount {
     // 총 혜택 금액에 따라 12월 이벤트 배지 부여 (요구사항 : 2만, 1만, 5천)
     public String eventBadge (int discountTotal) {
         int absDiscountTotal = Math.abs(discountTotal);
-        if (absDiscountTotal >= 20_000) {
-            return "산타";
-        }
-        if (absDiscountTotal >= 10_000) {
-            return "트리";
-        }
-        if (absDiscountTotal >= 5_000) {
-            return "별";
-        }
-        return "없음";
+        return EventBadge.getEventBadge(absDiscountTotal).getBadgeName();
     }
 }
